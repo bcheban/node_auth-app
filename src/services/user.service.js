@@ -101,28 +101,3 @@ export const changeEmail = async (userId, { password, newEmail }) => {
     throw new Error(emailErr.message);
   }
 };
-
-export const confirmEmailChange = async (token) => {
-  const user = await User.findOne({ where: { emailChangeToken: token } });
-
-  if (!user || !user.pendingEmail) {
-    throw Object.assign(new Error('Invalid email change token'), {
-      status: 400,
-    });
-  }
-
-  const oldEmail = user.email;
-
-  user.email = user.pendingEmail;
-  user.pendingEmail = null;
-  user.emailChangeToken = null;
-  await user.save();
-
-  try {
-    await emailService.sendEmailChangeNotice(oldEmail);
-  } catch (emailErr) {
-    throw new Error(emailErr.message);
-  }
-
-  return user;
-};

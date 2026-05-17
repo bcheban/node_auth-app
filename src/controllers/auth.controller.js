@@ -114,3 +114,18 @@ export const confirmPasswordReset = async (req, res) => {
     });
   }
 };
+
+export const confirmEmailChange = async (req, res) => {
+  const { token } = req.params;
+
+  try {
+    const user = await authService.confirmEmailChange(token);
+
+    return res.json({
+      message: 'Email changed successfully.',
+      user: { id: user.id, name: user.name, email: user.email },
+    });
+  } catch (err) {
+    return res.status(err.status || 500).json({ message: err.message });
+  }
+};
