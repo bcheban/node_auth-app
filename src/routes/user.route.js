@@ -13,9 +13,4 @@ userRouter.patch('/profile/name', userController.changeName);
 userRouter.patch('/profile/password', userController.changePassword);
 userRouter.patch('/profile/email', userController.changeEmail);
 
-userRouter.get(
-  '/profile/confirm-email/:token',
-  userController.confirmEmailChange,
-);
-
 export default userRouter;

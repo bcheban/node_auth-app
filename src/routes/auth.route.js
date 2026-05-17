@@ -24,4 +24,10 @@ authRouter.post(
   authController.confirmPasswordReset,
 );
 
+authRouter.get(
+  '/confirm-email/:token',
+  guestMiddleware,
+  authController.confirmEmailChange,
+);
+
 export default authRouter;
